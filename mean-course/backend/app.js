@@ -31,7 +31,7 @@ router.get('/api/posts', async (req, res, next) => {
         .then(posts => {
             res.status(200).json({
                 message: 'Posts fetched successfully!',
-                posts: posts 
+                posts: posts
             });
         })
         .catch(error => console.log('error in fetching posts'));
