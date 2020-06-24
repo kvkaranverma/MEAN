@@ -14,12 +14,8 @@ mongoose.connect("mongodb+srv://Karan:Whynotme1@cluster0-1cn7x.mongodb.net/node-
         console.log('Connected to database');
     }).catch((err) => {
         console.log('Connection failed', err);
-    });
-
-const posts = [
-    {id: 'sdkjfhdjs', title: 'First server side post', content: 'first content coming from server'},
-    {id: 'sdkjfhddd', title: 'Second server side post', content: 'second content coming from server'},
-];
+    }
+);
 
 router.post('/api/posts', async (req, res, next) => {
     const post = new Post(req.body);
@@ -30,11 +26,16 @@ router.post('/api/posts', async (req, res, next) => {
     });
 });
 
-router.get('/api/posts', (req, res, next) => {
-    res.status(200).json({
-        message: 'Posts fetched successfully!',
-        posts
-    });
+router.get('/api/posts', async (req, res, next) => {
+    await Post.find()
+        .then(posts => {
+            res.status(200).json({
+                message: 'Posts fetched successfully!',
+                posts: posts 
+            });
+        })
+        .catch(error => console.log('error in fetching posts'));
+    
 });
 
 app.use((req, res, next) => {
