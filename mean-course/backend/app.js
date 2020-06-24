@@ -20,10 +20,12 @@ mongoose.connect("mongodb+srv://Karan:Whynotme1@cluster0-1cn7x.mongodb.net/node-
 router.post('/api/posts', async (req, res, next) => {
     const post = new Post(req.body);
     console.log(post);
-    await post.save()
-    res.status(201).send({
-        message: 'Post added successfully!'
-    });
+    await post.save().then(result => {
+        res.status(201).send({
+            message: 'Post added successfully!',
+            postId: result._id
+        });
+    })
 });
 
 router.get('/api/posts', async (req, res, next) => {
