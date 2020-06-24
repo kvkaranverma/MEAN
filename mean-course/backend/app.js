@@ -38,6 +38,15 @@ router.get('/api/posts', async (req, res, next) => {
     
 });
 
+router.delete('/api/posts/:id', async (req, res) => {
+    await Post.deleteOne({ _id: req.params.id }).then(result => {
+        console.log(result);
+        res.status(200).send({
+            message: 'Post deleted'
+        })
+    })
+});
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
