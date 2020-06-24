@@ -4,13 +4,15 @@ const bodyParser = require('body-parser');
 const app = express();
 const router = express.Router();
 
+const Post = require('./models/post');
+
 const posts = [
     {id: 'sdkjfhdjs', title: 'First server side post', content: 'first content coming from server'},
     {id: 'sdkjfhddd', title: 'Second server side post', content: 'second content coming from server'},
 ];
 
 router.post('/api/posts', (req, res, next) => {
-    const post = req.body;
+    const post = new Post(req.body);
     console.log(post);
     res.status(201).send({
         message: 'Post added successfully!'
@@ -23,7 +25,7 @@ router.get('/api/posts', (req, res, next) => {
         posts
     });
 });
-
+//gdBkUPmdbyiNTAxa
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
