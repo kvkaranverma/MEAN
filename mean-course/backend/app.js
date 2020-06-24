@@ -1,10 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const mongoose = require('mongoose');
 const app = express();
 const router = express.Router();
 
 const Post = require('./models/post');
+
+mongoose.connect("mongodb+srv://Karan:Whynotme1@cluster0-1cn7x.mongodb.net/test?retryWrites=true&w=majority",
+    {
+        useNewUrlParser: true
+    })
+    .then(() => {
+        console.log('Connected to database');
+    }).catch((err) => {
+        console.log('Connection failed', err);
+    });
 
 const posts = [
     {id: 'sdkjfhdjs', title: 'First server side post', content: 'first content coming from server'},
@@ -25,7 +35,7 @@ router.get('/api/posts', (req, res, next) => {
         posts
     });
 });
-//gdBkUPmdbyiNTAxa
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
