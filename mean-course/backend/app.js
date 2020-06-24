@@ -6,7 +6,7 @@ const router = express.Router();
 
 const Post = require('./models/post');
 
-mongoose.connect("mongodb+srv://Karan:Whynotme1@cluster0-1cn7x.mongodb.net/test?retryWrites=true&w=majority",
+mongoose.connect("mongodb+srv://Karan:Whynotme1@cluster0-1cn7x.mongodb.net/node-angular?retryWrites=true&w=majority",
     {
         useNewUrlParser: true
     })
@@ -21,9 +21,10 @@ const posts = [
     {id: 'sdkjfhddd', title: 'Second server side post', content: 'second content coming from server'},
 ];
 
-router.post('/api/posts', (req, res, next) => {
+router.post('/api/posts', async (req, res, next) => {
     const post = new Post(req.body);
     console.log(post);
+    await post.save()
     res.status(201).send({
         message: 'Post added successfully!'
     });
