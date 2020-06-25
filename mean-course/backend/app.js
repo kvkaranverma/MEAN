@@ -17,7 +17,7 @@ mongoose.connect("mongodb+srv://Karan:Whynotme1@cluster0-1cn7x.mongodb.net/node-
     }
 );
 
-router.post('/api/posts', async (req, res, next) => {
+router.post('/api/posts', async (req, res) => {
     const post = new Post(req.body);
     console.log(post);
     await post.save().then(result => {
@@ -28,7 +28,7 @@ router.post('/api/posts', async (req, res, next) => {
     })
 });
 
-router.get('/api/posts', async (req, res, next) => {
+router.get('/api/posts', async (req, res) => {
     await Post.find()
         .then(posts => {
             res.status(200).json({
@@ -39,6 +39,22 @@ router.get('/api/posts', async (req, res, next) => {
         .catch(error => console.log('error in fetching posts'));
     
 });
+
+router.patch('/api/posts/:id', async (req, res) => {
+    const post = new Post({
+        _id: req.params.id,
+        title: req.body.title,
+        content: req.body.content
+    })
+    console.log(post, req.params.id)
+    await Post.updateOne({_id: req.params.id}, post).then(result => {
+        console.log(result);
+        res.status(200).send({message: 'Update successful!'});
+    }).catch(err => {
+        console.log('Error updating!');
+        res.status(400).send({message: 'Error in updating'});
+    })
+})
 
 router.delete('/api/posts/:id', async (req, res) => {
     await Post.deleteOne({ _id: req.params.id }).then(result => {
