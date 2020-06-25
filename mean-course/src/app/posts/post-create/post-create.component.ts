@@ -32,7 +32,7 @@ export class PostCreateComponent implements OnInit {
             }),
             image: new FormControl(null, {
                 validators: [Validators.required],
-                asyncValidators: [mimeType]
+                //asyncValidators: [mimeType]
             })
         });
 
@@ -58,12 +58,12 @@ export class PostCreateComponent implements OnInit {
         });
     }
 
-    onSavePost() {
+    onSavePost() {debugger
         if(this.form.invalid) {
             return
         }
         if(this.mode === 'create') {
-            this.postsService.addPost(this.form.value.title, this.form.value.content);
+            this.postsService.addPost(this.form.value.title, this.form.value.content, this.form.value.image);
         }
         else {
             this.postsService.updatePost(this.postId, this.form.value.title, this.form.value.content)
@@ -72,7 +72,7 @@ export class PostCreateComponent implements OnInit {
         this.form.reset();
     }
 
-    onImagePicker(event) {
+    onImagePicker(event) {debugger
         const file = (event.target as HTMLInputElement).files[0];
         this.form.patchValue({
             image: file

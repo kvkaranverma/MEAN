@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
         if(isValid) {
             error = null;
         }
-        callback(error, 'mean-course/backend/images')
+        callback(error, 'backend/images')
     },
     filename: (req, file, callback) => {
         const name = file.originalname.toLowerCase().split(' ').join('-');
@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
     }
 });
 
-router.post('/api/posts', multer(storage).single('image'), async (req, res) => {
+router.post('/api/posts', multer({storage: storage}).single('image'), async (req, res) => {
     const post = new Post(req.body);
     console.log(post);
     await post.save().then(result => {
