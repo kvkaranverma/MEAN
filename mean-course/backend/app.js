@@ -40,6 +40,17 @@ router.get('/api/posts', async (req, res) => {
     
 });
 
+router.get('/api/posts/:id', async (req, res) => {
+    await Post.findById(req.params.id).then(post => {
+        if(post) {
+            res.status(200).send(post);
+        }
+        else {
+            res.status(404).send({message: 'Post not found'});
+        }
+    }).catch(err => console.log(err))
+})
+
 router.patch('/api/posts/:id', async (req, res) => {
     const post = new Post({
         _id: req.params.id,
