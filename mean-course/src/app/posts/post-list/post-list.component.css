@@ -1,22 +1,21 @@
 :host {
-    display: block;
-    margin-top: 1rem;
-}
-
-.info-text {
-    display: block;
-    text-align: center;
+  display: block;
+  margin-top: 1rem;
 }
 
 mat-spinner {
-    margin: auto;
+  margin: auto;
+}
+
+.info-text {
+  text-align: center;
 }
 
 .post-image {
-    width: 100%;   
+  width: 100%;
 }
 
 .post-image img {
-    width: 300px;
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  width: 100%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }

@@ -67,11 +67,13 @@ router.get('/api/posts/:id', async (req, res) => {
     }).catch(err => console.log(err))
 })
 
-router.patch('/api/posts/:id', async (req, res) => {
+router.patch('/api/posts/:id', multer({storage: storage}).single('image'), async (req, res) => {
+    console.log(req.file);
     const post = new Post({
         _id: req.params.id,
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+
     })
     console.log(post, req.params.id)
     await Post.updateOne({_id: req.params.id}, post).then(result => {
