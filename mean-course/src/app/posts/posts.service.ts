@@ -33,7 +33,7 @@ export class PostsService {
         return this.postsUpdated.asObservable();
     }
 
-    getPost(id: string) {debugger
+    getPost(id: string) {
         return this.http.get<{_id: string, title: string, content: string}>('http://localhost:3000/api/posts/'+id);
     }
 
