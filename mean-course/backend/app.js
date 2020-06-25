@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 const postRoutes = require('./routes/posts')
+const path = require('path');
 
 const Post = require('./models/post');
 
@@ -27,5 +28,6 @@ app.use((req, res, next) => {
 })
 app.use(bodyParser.json())
 app.use(postRoutes)
+app.use('/images', express.static(path.join('backend/images')))
 
 module.exports = app;
