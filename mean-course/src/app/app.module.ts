@@ -11,11 +11,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
-import { PostsService } from './posts/posts.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +32,7 @@ import { PostsService } from './posts/posts.service';
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatPaginatorModule,
     MatProgressSpinnerModule,
     MatExpansionModule,
     MatToolbarModule,
