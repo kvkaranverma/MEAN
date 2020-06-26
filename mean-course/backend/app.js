@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 })
 app.use(bodyParser.json())
 
-app.use('api/user', userRoutes)
+app.use('/api/user', userRoutes)
 app.use(postRoutes)
 
 app.use('/images', express.static(path.join('backend/images')))

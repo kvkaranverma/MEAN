@@ -5,8 +5,9 @@ const router = express.Router()
 const User = require('../models/user');
 
 router.post('/signup', (req, res) => {
-    bcrypt.hash(req.body.password)
+    bcrypt.hash(req.body.password, 9)
         .then(hashedPassword => {
+            console.log(hashedPassword)
             const user = new User({
                 email: req.body.email,
                 password: hashedPassword
@@ -16,12 +17,14 @@ router.post('/signup', (req, res) => {
                 .then((result) => {
                     res.status(201).send({
                         message: 'User created',
-                        result
+                        result: result
                     });
                 }).catch(err => {
                     console.log(err);
                     res.status(500).send('Not able to add user')
                 });
+        }).catch(err => {
+            console.log(err)
         })
 })
 
