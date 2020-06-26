@@ -3,6 +3,7 @@ const Post = require('../models/post')
 const multer = require('multer')
 
 const router = express.Router();
+const checkAuth = require('../middleware/check-auth')
 
 const MIME_TYPE_MAP = {
     'image/png': 'png',
@@ -25,7 +26,7 @@ const storage = multer.diskStorage({
     }
 });
 
-router.post('/api/posts', multer({storage: storage}).single('image'), async (req, res) => {
+router.post('/api/posts', checkAuth, multer({storage: storage}).single('image'), async (req, res) => {
     const url = req.protocol + '://' + req.get('host');
     const post = new Post({
         title: req.body.title,
@@ -44,7 +45,7 @@ router.post('/api/posts', multer({storage: storage}).single('image'), async (req
     })
 });
 
-router.get('/api/posts', async (req, res) => {
+router.get('/api/posts', checkAuth, async (req, res) => {
     const pageSize = +req.query.pageSize;
     const currentPage = +req.query.page;
     const postQuery = Post.find();
@@ -82,7 +83,7 @@ router.get('/api/posts/:id', async (req, res) => {
     }).catch(err => console.log(err))
 })
 
-router.patch('/api/posts/:id', multer({storage: storage}).single('image'), async (req, res) => {
+router.patch('/api/posts/:id', checkAuth, multer({storage: storage}).single('image'), async (req, res) => {
     console.log(req.file);
     const post = new Post({
         _id: req.params.id,
