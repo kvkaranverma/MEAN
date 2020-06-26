@@ -31,6 +31,7 @@ router.post('/signup', (req, res) => {
 })
 
 router.post('/login', (req, res, next) => {
+    let fetchedUser;
     User.findOne({ email: req.body.email })
         .then(user => {
             if(!user) {
@@ -38,6 +39,7 @@ router.post('/login', (req, res, next) => {
                     message: 'Auth failed'
                 })
             }
+            fetchedUser = user
             return bcrypt.compare(req.body.password, user.password);
         }).then(result => {
             if(!result) {
@@ -46,10 +48,14 @@ router.post('/login', (req, res, next) => {
                 })
             }
             const token = jwt.sign(
-                {email: user.email, userId: user._id},
+                {email: fetchedUser.email, userId: fetchedUser._id},
                 'this_is_secret_fuck_off',
-                {expiresIn: '1h'});
-
+                {expiresIn: '1h'}
+            );
+            res.status(200).send({
+                token
+            })
+            
         }).catch(err => {
             return res.status(404).send({
                 message: 'Auth failed'
