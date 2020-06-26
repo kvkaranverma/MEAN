@@ -3,9 +3,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 const postRoutes = require('./routes/posts')
+const userRoutes = require('./routes/user')
 const path = require('path');
-
-const Post = require('./models/post');
 
 mongoose.connect("mongodb+srv://Karan:Whynotme1@cluster0-1cn7x.mongodb.net/node-angular?retryWrites=true&w=majority",
     {
@@ -27,7 +26,10 @@ app.use((req, res, next) => {
     next();
 })
 app.use(bodyParser.json())
+
+app.use('api/user', userRoutes)
 app.use(postRoutes)
+
 app.use('/images', express.static(path.join('backend/images')))
 
 module.exports = app;
