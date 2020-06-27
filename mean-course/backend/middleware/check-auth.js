@@ -12,7 +12,7 @@ const auth = (req, res, next) => {
     }
     catch(error){
         res.status(401).send({
-            message: 'Authentication failed!'
+            message: 'You are not logged in!'
         })
     }
 

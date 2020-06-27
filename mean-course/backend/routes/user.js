@@ -23,7 +23,9 @@ router.post('/signup', (req, res) => {
                     });
                 }).catch(err => {
                     console.log(err);
-                    res.status(500).send('Not able to add user')
+                    res.status(500).send({
+                        message: 'User already exists'
+                    })
                 });
         }).catch(err => {
             console.log(err)
@@ -36,7 +38,7 @@ router.post('/login', (req, res, next) => {
         .then(user => {
             if(!user) {
                 return res.status(404).send({
-                    message: 'Auth failed'
+                    message: 'Authentication failed'
                 })
             }
             fetchedUser = user
@@ -44,7 +46,7 @@ router.post('/login', (req, res, next) => {
         }).then(result => {
             if(!result) {
                 return res.status(404).send({
-                    message: 'Auth failed'
+                    message: 'Authentication failed'
                 })
             }
             const token = jwt.sign(
@@ -60,7 +62,7 @@ router.post('/login', (req, res, next) => {
             
         }).catch(err => {
             return res.status(404).send({
-                message: 'Auth failed'
+                message: 'Authentication failed'
             })
         })
 })

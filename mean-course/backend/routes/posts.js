@@ -42,7 +42,11 @@ router.post('/api/posts', checkAuth, multer({storage: storage}).single('image'),
                 id: result._id
             }
         });
-    }).catch((err) => console.log(err))
+    }).catch((err) => {
+        res.status(500).send({
+            message: 'Creating a post failed'
+        })
+    })
 });
 
 router.get('/api/posts', async (req, res) => {
@@ -67,8 +71,10 @@ router.get('/api/posts', async (req, res) => {
                 posts: fetchedPosts,
                 maxPosts: count
             })
-        })
-        .catch(error => console.log('error in fetching posts'));
+        }).catch(error => {
+            res.status(500).send({
+                message: 'Error in fetching posts'})
+        });
     
 });
 
@@ -97,7 +103,7 @@ router.patch('/api/posts/:id', checkAuth, multer({storage: storage}).single('ima
             res.status(200).send({message: 'Update successful!'});
         }
         else{
-            res.status(401).send({message: 'Not Authorized'});
+            res.status(401).send({message: 'Post cannot be edited'});
         }
 
     }).catch(err => {
@@ -115,10 +121,12 @@ router.delete('/api/posts/:id', checkAuth, async (req, res) => {
             })
         }
         else{
-            res.status(401).send({message: 'Not Authorized'});
+            res.status(401).send({message: 'Error in deleting post'});
         }
         
-    }).catch((err) => console.log(err))
+    }).catch((err) => {
+        res.status(401).send({message: 'Error in deleting post'});
+    })
 });
 
 module.exports = router

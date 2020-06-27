@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     if(loginForm.invalid) {
       return
     }
-    console.log(loginForm)
     this.authService.loginUser(loginForm.value.email, loginForm.value.password)
   }
 
