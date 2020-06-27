@@ -8,14 +8,16 @@ import { ErrorComponent } from './error/error.component';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
     
-    constructor(private matDialog: MatDialog) {
-        
-    }
+    constructor(private matDialog: MatDialog) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
-                this.matDialog.open(ErrorComponent);
+                let errorMessage = 'An unknown error occured!';
+                if(error.error) {
+                    errorMessage = error.error
+                }
+                this.matDialog.open(ErrorComponent, {data: {message: errorMessage}});
                 return throwError(error)
             })
         );
