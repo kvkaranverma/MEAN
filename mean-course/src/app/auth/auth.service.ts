@@ -46,7 +46,6 @@ export class AuthService {
 
     loginUser(email: string, password: string) {
         const authData: AuthData = {email, password};
-        console.log(authData)
         this.http.post<{token: string, expiresIn: number, userId: string}>(BACKEND_URL+'/login', authData)
             .subscribe(response => {
                 const token  = response.token;
@@ -58,7 +57,6 @@ export class AuthService {
                     this.userId = response.userId;
                     const now = new Date();
                     const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-                    console.log(expirationDate);
                     this.saveAuthData(token, expirationDate, response.userId);
                     this.authStatusListener.next(true);
                 }
@@ -94,7 +92,6 @@ export class AuthService {
     }
 
     private setAuthTimer(duration: number) {
-        console.log('Setting timer: ' + duration);
         this.tokenTimer = setTimeout(() => {
             this.logout();
         }, duration * 1000);

@@ -1,0 +1,6 @@
+{
+    "env": {
+        "MONGO_ATLAS_PW": "Whynotme1",
+        "JWT_KEY": "this_is_secret_fuck_off"
+    }
+}

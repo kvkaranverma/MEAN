@@ -6,7 +6,7 @@ const postRoutes = require('./routes/posts')
 const userRoutes = require('./routes/user')
 const path = require('path');
 
-mongoose.connect("mongodb+srv://Karan:Whynotme1@cluster0-1cn7x.mongodb.net/node-angular?retryWrites=true&w=majority",
+mongoose.connect("mongodb+srv://Karan:"+ process.env.MONGO_ATLAS_PW +"@cluster0-1cn7x.mongodb.net/node-angular?retryWrites=true&w=majority",
     {
         useNewUrlParser: true
     })
