@@ -89,7 +89,7 @@ router.patch('/api/posts/:id', checkAuth, multer({storage: storage}).single('ima
         _id: req.params.id,
         title: req.body.title,
         content: req.body.content,
-
+        creator: req.userData.userId
     })
     console.log(post, req.params.id)
     await Post.updateOne({_id: req.params.id, creator: req.userData.userId}, post).then(result => {
