@@ -42,10 +42,10 @@ router.post('/api/posts', checkAuth, multer({storage: storage}).single('image'),
                 id: result._id
             }
         });
-    })
+    }).catch((err) => console.log(err))
 });
 
-router.get('/api/posts', checkAuth, async (req, res) => {
+router.get('/api/posts', async (req, res) => {
     const pageSize = +req.query.pageSize;
     const currentPage = +req.query.page;
     const postQuery = Post.find();
@@ -107,7 +107,7 @@ router.delete('/api/posts/:id', async (req, res) => {
         res.status(200).send({
             message: 'Post deleted'
         })
-    })
+    }).catch((err) => console.log(err))
 });
 
 module.exports = router
