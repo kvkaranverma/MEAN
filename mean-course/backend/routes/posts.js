@@ -92,21 +92,32 @@ router.patch('/api/posts/:id', checkAuth, multer({storage: storage}).single('ima
 
     })
     console.log(post, req.params.id)
-    await Post.updateOne({_id: req.params.id}, post).then(result => {
-        console.log(result);
-        res.status(200).send({message: 'Update successful!'});
+    await Post.updateOne({_id: req.params.id, creator: req.userData.userId}, post).then(result => {
+        if(result.nModified > 0) {
+            res.status(200).send({message: 'Update successful!'});
+        }
+        else{
+            res.status(401).send({message: 'Not Authorized'});
+        }
+
     }).catch(err => {
         console.log('Error updating!');
         res.status(400).send({message: 'Error in updating'});
     })
 })
 
-router.delete('/api/posts/:id', async (req, res) => {
-    await Post.deleteOne({ _id: req.params.id }).then(result => {
-        console.log(result);
-        res.status(200).send({
-            message: 'Post deleted'
-        })
+router.delete('/api/posts/:id', checkAuth, async (req, res) => {
+    await Post.deleteOne({ _id: req.params.id, creator: req.userData.userId }).then(result => {
+        console.log(result)
+        if(result.n > 0) {
+            res.status(200).send({
+                message: 'Post deleted'
+            })
+        }
+        else{
+            res.status(401).send({message: 'Not Authorized'});
+        }
+        
     }).catch((err) => console.log(err))
 });
 
