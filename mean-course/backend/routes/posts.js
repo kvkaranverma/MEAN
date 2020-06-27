@@ -31,9 +31,9 @@ router.post('/api/posts', checkAuth, multer({storage: storage}).single('image'),
     const post = new Post({
         title: req.body.title,
         content: req.body.content,
-        imagePath: url + '/images/' + req.file.filename
+        imagePath: url + '/images/' + req.file.filename,
+        creator: req.userData.userId 
     });
-    console.log(post);
     await post.save().then(result => {
         res.status(201).send({
             message: 'Post added successfully!',
